@@ -1,16 +1,16 @@
-// 발로란트 맵 데이터 (이름 & 고화질 배경 이미지)
+// 라이엇 공식 VALORANT API 고화질 맵 스플래시 이미지 링크
 const valMaps = [
-    { name: "어센트 (Ascent)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt1f618b76cdd14728/5eb7cd148e67a57a02241f97/ascent-featured.jpg" },
-    { name: "바인드 (Bind)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt33bc3a59d9972352/5eb7cd0c306d8a0c20164c40/bind-featured.jpg" },
-    { name: "헤이븐 (Haven)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt36f2a6a68f6a42a0/5eb7cd10f607d70c0c788220/haven-featured.jpg" },
-    { name: "스플릿 (Split)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/bltd5723b378051a80c/5eb7cd1d2a13280c102377b5/split-featured.jpg" },
-    { name: "아이스박스 (Icebox)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt2b1c28c894ef08f7/5f80cc0288eb92723c3167eb/Icebox_Header.jpg" },
-    { name: "브리즈 (Breeze)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt226b9a473b184a56/608214f44053673f8a42c38d/Breeze_Header.jpg" },
-    { name: "프랙처 (Fracture)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt1e9134a413d750c9/6132a0cb5d92e50edaa2ebdc/Fracture_Header.jpg" },
-    { name: "펄 (Pearl)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/bltcb2ed4517ec562d9/62a26569ecdfd95015e342a2/Pearl_Header.jpg" },
-    { name: "로터스 (Lotus)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt3c8612ca4e00f946/63b723528b17171092fb1380/Lotus_Header.jpg" },
-    { name: "선셋 (Sunset)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/bltd1bd1e68ca4339be/64e8fd426bfb3fdfbc88be88/Sunset_Header.jpg" },
-    { name: "어비스 (Abyss)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt0dfa6c7081fa8331/66624a9ed517e47dbb1f4134/Abyss_Header.jpg" }
+    { name: "어센트 (Ascent)", bg: "https://media.valorant-api.com/maps/7edd9e3d-4191-708d-9b09-24b73708a5f1/splash.png" },
+    { name: "바인드 (Bind)", bg: "https://media.valorant-api.com/maps/2c9d3312-4a6e-4b28-9fef-bc27bd852386/splash.png" },
+    { name: "헤이븐 (Haven)", bg: "https://media.valorant-api.com/maps/2bee0692-4b96-7a70-9d0d-05a3277085a8/splash.png" },
+    { name: "스플릿 (Split)", bg: "https://media.valorant-api.com/maps/d2b789a4-4be0-b1d7-1761-b7a407a06d1b/splash.png" },
+    { name: "아이스박스 (Icebox)", bg: "https://media.valorant-api.com/maps/e29c1b92-4168-811c-d83d-0b9247d52f61/splash.png" },
+    { name: "브리즈 (Breeze)", bg: "https://media.valorant-api.com/maps/2fb43247-4707-b99e-277c-8e8e36120a9b/splash.png" },
+    { name: "프랙처 (Fracture)", bg: "https://media.valorant-api.com/maps/b52c1225-4a56-b90e-73a3-a184a8330998/splash.png" },
+    { name: "펄 (Pearl)", bg: "https://media.valorant-api.com/maps/fd2673d9-417d-ad7b-8801-11af3030706c/splash.png" },
+    { name: "로터스 (Lotus)", bg: "https://media.valorant-api.com/maps/2fe4ed3a-450a-948b-6d6b-e89a78e680a9/splash.png" },
+    { name: "선셋 (Sunset)", bg: "https://media.valorant-api.com/maps/92584fbe-486a-b3b2-9afe-09a950746d6d/splash.png" },
+    { name: "어비스 (Abyss)", bg: "https://media.valorant-api.com/maps/2240863f-42e7-a722-2615-38a163283f58/splash.png" }
 ];
 
 // 초기 선수 목록
@@ -57,9 +57,9 @@ function startRoulette() {
     tagEl.innerText = "SPINNING...";
     tagEl.style.background = "#ff4655";
 
-    let delay = 30; // 시작 속도
+    let delay = 30;
     let count = 0;
-    const maxCount = 35; // 총 교체 횟수
+    const maxCount = 35;
 
     function step() {
         const randomMap = valMaps[Math.floor(Math.random() * valMaps.length)];
@@ -71,7 +71,6 @@ function startRoulette() {
             delay += Math.floor(count * 0.8);
             setTimeout(step, delay);
         } else {
-            // 당첨 연출
             box.classList.add('winning');
             tagEl.innerText = "SELECTED MAP";
             tagEl.style.background = "#22c55e";
