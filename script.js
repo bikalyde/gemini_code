@@ -50,34 +50,40 @@ function initCarousel() {
 function setTrackPosition(px, animate = true) {
     const track = document.getElementById('carousel-track');
     if (!track) return;
-    track.style.transition = animate ? 'transform 5s cubic-bezier(0.12, 0.8, 0.15, 1)' : 'none';
+    // 아이폰 특유의 자연스러운 관성 감속 애니메이션 (Cubic Beziers)
+    track.style.transition = animate ? 'transform 5s cubic-bezier(0.1, 0.85, 0.15, 1)' : 'none';
     track.style.transform = `translateX(${px}px)`;
 }
 
-let playersData = [
-    { id: 'p1', name: "유저1 (팀장A)" },
-    { id: 'p2', name: "유저2 (팀장B)" },
-    { id: 'p3', name: "유저3 (팀장C)" },
-    { id: 'p4', name: "유저4" },
-    { id: 'p5', name: "유저5" },
-    { id: 'p6', name: "유저6" },
-    { id: 'p7', name: "유저7" },
-    { id: 'p8', name: "유저8" },
-    { id: 'p9', name: "유저9" },
-    { id: 'p10', name: "유저10" },
-    { id: 'p11', name: "유저11" },
-    { id: 'p12', name: "유저12" },
-    { id: 'p13', name: "유저13" },
-    { id: 'p14', name: "유저14" },
-    { id: 'p15', name: "유저15" }
-];
-
-const teamLists = { pool: [...playersData], kimchi: [], pizza: [], tangsuyuk: [] };
-
+/* 부드러운 iOS 스타일 탭 전환 핸들러 */
 function switchTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    const currentTab = document.querySelector('.tab-content.active');
     const targetTab = document.getElementById(`tab-${tabId}`);
-    if (targetTab) targetTab.classList.add('active');
+
+    if (currentTab === targetTab) return;
+
+    if (currentTab) {
+        currentTab.style.opacity = '0';
+        currentTab.style.transform = 'translateY(-10px) scale(0.98)';
+        
+        setTimeout(() => {
+            currentTab.classList.remove('active');
+            if (targetTab) {
+                targetTab.classList.add('active');
+                // DOM 렌더링 타이밍 딜레이 적용
+                requestAnimationFrame(() => {
+                    targetTab.style.opacity = '1';
+                    targetTab.style.transform = 'translateY(0) scale(1)';
+                });
+            }
+        }, 200);
+    } else if (targetTab) {
+        targetTab.classList.add('active');
+        requestAnimationFrame(() => {
+            targetTab.style.opacity = '1';
+            targetTab.style.transform = 'translateY(0) scale(1)';
+        });
+    }
 
     const homeBtn = document.getElementById('top-home-btn');
     if (homeBtn) homeBtn.style.display = (tabId === 'main') ? 'none' : 'block';
@@ -205,6 +211,26 @@ function dropPlayer(ev, targetTeam) {
     renderTeamInfoPage();
 }
 
+let playersData = [
+    { id: 'p1', name: "유저1 (팀장A)" },
+    { id: 'p2', name: "유저2 (팀장B)" },
+    { id: 'p3', name: "유저3 (팀장C)" },
+    { id: 'p4', name: "유저4" },
+    { id: 'p5', name: "유저5" },
+    { id: 'p6', name: "유저6" },
+    { id: 'p7', name: "유저7" },
+    { id: 'p8', name: "유저8" },
+    { id: 'p9', name: "유저9" },
+    { id: 'p10', name: "유저10" },
+    { id: 'p11', name: "유저11" },
+    { id: 'p12', name: "유저12" },
+    { id: 'p13', name: "유저13" },
+    { id: 'p14', name: "유저14" },
+    { id: 'p15', name: "유저15" }
+];
+
+const teamLists = { pool: [...playersData], kimchi: [], pizza: [], tangsuyuk: [] };
+
 function renderDraftUI() {
     ['kimchi', 'pizza', 'tangsuyuk'].forEach(team => {
         const container = document.getElementById(`drop-${team}`);
@@ -242,10 +268,10 @@ function renderTeamInfoPage() {
         if (!ul) return;
         ul.innerHTML = "";
         if (teamLists[team].length === 0) {
-            ul.innerHTML = "<li>지명된 선수가 없습니다.</li>";
+            ul.innerHTML = "<li style='color: #64748b;'>지명된 선수가 없습니다.</li>";
         } else {
             teamLists[team].forEach(p => {
-                ul.innerHTML += `<li><b>${p.name}</b></li>`;
+                ul.innerHTML += `<li style='margin-bottom:6px;'><b>${p.name}</b></li>`;
             });
         }
     });
