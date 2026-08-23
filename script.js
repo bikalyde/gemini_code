@@ -1,22 +1,21 @@
-// 검증된 고화질 웹 공개 맵 스플래시 이미지 (CORS 및 외부 차단 없음)
+// 외부 이미지 링크 없이 CSS 그라데이션으로 100% 자체 생성되는 맵 스타일
 const valMaps = [
-    { name: "어센트", enName: "ASCENT", bg: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Valorant_Ascent_Map.png/1200px-Valorant_Ascent_Map.png" },
-    { name: "바인드", enName: "BIND", bg: "https://vstats.gg/images/maps/bind.jpg" },
-    { name: "헤이븐", enName: "HAVEN", bg: "https://vstats.gg/images/maps/haven.jpg" },
-    { name: "스플릿", enName: "SPLIT", bg: "https://vstats.gg/images/maps/split.jpg" },
-    { name: "아이스박스", enName: "ICEBOX", bg: "https://vstats.gg/images/maps/icebox.jpg" },
-    { name: "브리즈", enName: "BREEZE", bg: "https://vstats.gg/images/maps/breeze.jpg" },
-    { name: "프랙처", enName: "FRACTURE", bg: "https://vstats.gg/images/maps/fracture.jpg" },
-    { name: "펄", enName: "PEARL", bg: "https://vstats.gg/images/maps/pearl.jpg" },
-    { name: "로터스", enName: "LOTUS", bg: "https://vstats.gg/images/maps/lotus.jpg" },
-    { name: "선셋", enName: "SUNSET", bg: "https://vstats.gg/images/maps/sunset.jpg" },
-    { name: "어비스", enName: "ABYSS", bg: "https://vstats.gg/images/maps/abyss.jpg" }
+    { name: "어센트", enName: "ASCENT", bgStyle: "linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #686de0 100%)" },
+    { name: "바인드", enName: "BIND", bgStyle: "linear-gradient(135deg, #e67e22 0%, #d35400 50%, #f39c12 100%)" },
+    { name: "헤이븐", enName: "HAVEN", bgStyle: "linear-gradient(135deg, #4a154b 0%, #6b117b 50%, #111e38 100%)" },
+    { name: "스플릿", enName: "SPLIT", bgStyle: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)" },
+    { name: "아이스박스", enName: "ICEBOX", bgStyle: "linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)" },
+    { name: "브리즈", enName: "BREEZE", bgStyle: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)" },
+    { name: "프랙처", enName: "FRACTURE", bgStyle: "linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%)" },
+    { name: "펄", enName: "PEARL", bgStyle: "linear-gradient(135deg, #130cb7 0%, #52e5e7 100%)" },
+    { name: "로터스", enName: "LOTUS", bgStyle: "linear-gradient(135deg, #11998e 0%, #38ef7d 50%, #f12711 100%)" },
+    { name: "선셋", enName: "SUNSET", bgStyle: "linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%)" },
+    { name: "어비스", enName: "ABYSS", bgStyle: "linear-gradient(135deg, #0f0c29 0%, #24243e 50%, #302b63 100%)" }
 ];
 
 const CARD_WIDTH = 240;
 let extendedMapList = [];
 
-// 무한 캐러셀을 위해 맵 목록을 여러 번 반복해서 트랙에 생성
 function initCarousel() {
     const track = document.getElementById('carousel-track');
     if (!track) return;
@@ -31,12 +30,14 @@ function initCarousel() {
         const card = document.createElement('div');
         card.className = 'map-card';
         card.id = `map-card-${idx}`;
-        card.style.backgroundImage = `url("${map.bg}")`;
+        
+        // 이미지 대신 CSS 그라데이션 적용
+        card.style.background = map.bgStyle;
 
         card.innerHTML = `
-            <div class="map-card-overlay">
+            <div class="map-card-overlay" style="background: linear-gradient(to top, rgba(15,25,35,0.95), transparent);">
                 <div>
-                    <div style="font-size: 11px; color: #ff4655; font-weight: 800; letter-spacing: 1px;">${map.enName}</div>
+                    <div style="font-size: 11px; color: #ff4655; font-weight: 800; letter-spacing: 2px;">${map.enName}</div>
                     <div class="map-card-title">${map.name}</div>
                 </div>
             </div>
