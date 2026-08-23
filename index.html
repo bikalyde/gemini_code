@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>발로란트 3팀 드래프트 내전</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 발로란트 3팀 드래프트 & 맵 추첨 🔥</h1>
+
+        <!-- 1. 맵 추첨 섹션 -->
+        <section class="card">
+            <h2>🗺️ 맵 추첨 (BO3 / 2선승제)</h2>
+            <button onclick="pickMaps()">맵 추첨하기</button>
+            <div id="map-result" class="result-box">버튼을 눌러 맵을 추첨하세요.</div>
+        </section>
+
+        <!-- 2. 선수 목록 및 티어 -->
+        <section class="card">
+            <h2>👥 드래프트 대기 매물 (임시 15명)</h2>
+            <div class="tier-container">
+                <div class="tier-group">
+                    <h3>👑 총사령관 (팀장 3명)</h3>
+                    <div id="tier-captains" class="player-list"></div>
+                </div>
+                <div class="tier-group">
+                    <h3>⚡ 클러치 마스터 (6명)</h3>
+                    <div id="tier-mid" class="player-list"></div>
+                </div>
+                <div class="tier-group">
+                    <h3>🔥 프로비던스 (6명)</h3>
+                    <div id="tier-high" class="player-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 팀 드래프트 현황 -->
+        <section class="card">
+            <h2>⚔️ 팀 구성 현황 (5인 1팀)</h2>
+            <div class="teams-container">
+                <div class="team-box" id="team-1">
+                    <h3>A팀</h3>
+                    <ul class="team-members"></ul>
+                </div>
+                <div class="team-box" id="team-2">
+                    <h3>B팀</h3>
+                    <ul class="team-members"></ul>
+                </div>
+                <div class="team-box" id="team-3">
+                    <h3>C팀</h3>
+                    <ul class="team-members"></ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
