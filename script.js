@@ -1,16 +1,16 @@
-// 외부 CDN 차단 우회(WSERV)를 적용한 고화질 VALORANT 맵 이미지 URL
+// 검증된 고화질 웹 공개 맵 스플래시 이미지 (CORS 및 외부 차단 없음)
 const valMaps = [
-    { name: "어센트", enName: "ASCENT", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/7edd9e3d-4191-708d-9b09-24b73708a5f1/splash.png" },
-    { name: "바인드", enName: "BIND", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/2c9d3312-4a6e-4b28-9fef-bc27bd852386/splash.png" },
-    { name: "헤이븐", enName: "HAVEN", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/2bee0692-4b96-7a70-9d0d-05a3277085a8/splash.png" },
-    { name: "스플릿", enName: "SPLIT", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/d2b789a4-4be0-b1d7-1761-b7a407a06d1b/splash.png" },
-    { name: "아이스박스", enName: "ICEBOX", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/e29c1b92-4168-811c-d83d-0b9247d52f61/splash.png" },
-    { name: "브리즈", enName: "BREEZE", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/2fb43247-4707-b99e-277c-8e8e36120a9b/splash.png" },
-    { name: "프랙처", enName: "FRACTURE", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/b52c1225-4a56-b90e-73a3-a184a8330998/splash.png" },
-    { name: "펄", enName: "PEARL", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/fd2673d9-417d-ad7b-8801-11af3030706c/splash.png" },
-    { name: "로터스", enName: "LOTUS", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/2fe4ed3a-450a-948b-6d6b-e89a78e680a9/splash.png" },
-    { name: "선셋", enName: "SUNSET", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/92584fbe-486a-b3b2-9afe-09a950746d6d/splash.png" },
-    { name: "어비스", enName: "ABYSS", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/2240863f-42e7-a722-2615-38a163283f58/splash.png" }
+    { name: "어센트", enName: "ASCENT", bg: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Valorant_Ascent_Map.png/1200px-Valorant_Ascent_Map.png" },
+    { name: "바인드", enName: "BIND", bg: "https://vstats.gg/images/maps/bind.jpg" },
+    { name: "헤이븐", enName: "HAVEN", bg: "https://vstats.gg/images/maps/haven.jpg" },
+    { name: "스플릿", enName: "SPLIT", bg: "https://vstats.gg/images/maps/split.jpg" },
+    { name: "아이스박스", enName: "ICEBOX", bg: "https://vstats.gg/images/maps/icebox.jpg" },
+    { name: "브리즈", enName: "BREEZE", bg: "https://vstats.gg/images/maps/breeze.jpg" },
+    { name: "프랙처", enName: "FRACTURE", bg: "https://vstats.gg/images/maps/fracture.jpg" },
+    { name: "펄", enName: "PEARL", bg: "https://vstats.gg/images/maps/pearl.jpg" },
+    { name: "로터스", enName: "LOTUS", bg: "https://vstats.gg/images/maps/lotus.jpg" },
+    { name: "선셋", enName: "SUNSET", bg: "https://vstats.gg/images/maps/sunset.jpg" },
+    { name: "어비스", enName: "ABYSS", bg: "https://vstats.gg/images/maps/abyss.jpg" }
 ];
 
 const CARD_WIDTH = 240;
