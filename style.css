@@ -89,57 +89,90 @@ body {
 }
 .subtitle { color: #9ca3af; margin: 8px 0 25px; font-size: 14px; }
 
-/* Star Drop Roulette */
-.stardrop-wrapper { position: relative; margin: 30px 0; }
-.stardrop-card {
-    height: 280px;
-    border-radius: 28px;
-    background: linear-gradient(135deg, #1f2937, #111827);
-    border: 3px solid rgba(255, 255, 255, 0.2);
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+/* 맵 룰렛 스타일 */
+.roulette-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    margin: 20px auto 30px;
 }
 
-.stardrop-light-effect {
-    position: absolute; width: 100%; height: 100%;
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-    opacity: 0; transition: opacity 0.3s;
+#fireworks-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 10;
 }
 
-.rarity-badge {
-    display: inline-block; padding: 6px 16px; border-radius: 20px;
-    font-weight: 900; font-size: 14px; letter-spacing: 2px;
-    background: #3b82f6; color: white; margin-bottom: 10px;
+.roulette-box {
+    height: 220px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #151922, #0d1017);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
-.stardrop-content h1 { font-size: 46px; font-weight: 900; letter-spacing: 2px; }
-.stardrop-content p { color: #9ca3af; margin-top: 6px; font-weight: 600; }
-
-/* Shake Animation */
-.shake { animation: stardropShake 0.1s infinite alternate; }
-@keyframes stardropShake {
-    0% { transform: translate(2px, 2px) rotate(0deg); }
-    100% { transform: translate(-2px, -2px) rotate(-1deg); }
+.map-tag {
+    background: #ff4655;
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 14px;
+    border-radius: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
 }
 
-/* Star Drop Legendary Glow */
-.legendary-glow {
-    border-color: #f59e0b !important;
-    box-shadow: 0 0 80px rgba(245, 158, 11, 0.8), inset 0 0 30px rgba(245, 158, 11, 0.5) !important;
-    animation: pulseLegendary 0.8s infinite alternate !important;
+.map-name {
+    font-size: 44px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: #ffffff;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.6);
 }
-@keyframes pulseLegendary {
-    from { transform: scale(1); }
-    to { transform: scale(1.02); }
+
+.roulette-box.winning {
+    border-color: #ff4655;
+    box-shadow: 0 0 50px rgba(255, 70, 85, 0.5);
+    animation: winPulse 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes winPulse {
+    0% { transform: scale(0.96); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
 }
 
 .spin-btn {
-    font-size: 18px; padding: 18px; border-radius: 16px;
+    font-size: 20px;
+    padding: 18px 40px;
+    border-radius: 16px;
     background: linear-gradient(135deg, #ff4655, #d93845);
-    color: white; border: none; font-weight: 800; cursor: pointer; width: 100%;
+    color: white;
+    border: none;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+    max-width: 680px;
 }
-.spin-btn:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(255, 70, 85, 0.4); }
+
+.spin-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 70, 85, 0.4);
+}
+
+.spin-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
 
 /* Scoreboard */
 .match-list { display: flex; flex-direction: column; gap: 20px; }

@@ -29,7 +29,7 @@
                     <div class="menu-icon">🎰</div>
                     <div class="menu-info">
                         <h2>맵 추첨하기</h2>
-                        <p>스타드롭 연출 스타일의 초화려 맵 룰렛</p>
+                        <p>감속 슬롯 연출 및 폭죽 이펙트 맵 무작위 추첨</p>
                     </div>
                 </div>
 
@@ -59,25 +59,21 @@
             </div>
         </section>
 
-        <!-- 2. 맵 추첨 화면 (스타드롭 연출 룰렛) -->
+        <!-- 2. 맵 추첨 화면 (감속 룰렛 + 폭죽) -->
         <section id="tab-map" class="tab-content">
             <div class="card glass text-center">
-                <h2>⭐ STAR DROP MAP ROULETTE ⭐</h2>
-                <p class="subtitle">모든 발로란트 맵 포함! 뽑기 버튼을 눌러 신화급 연출을 확인하세요!</p>
+                <h2>🎰 VALORANT MAP SELECTOR</h2>
+                <p class="subtitle">추첨 버튼을 누르면 무작위로 경기 맵이 결정됩니다.</p>
                 
-                <div class="stardrop-wrapper">
-                    <div class="stardrop-card" id="stardrop-card">
-                        <div class="stardrop-light-effect" id="stardrop-light"></div>
-                        <div class="stardrop-content">
-                            <div class="rarity-badge" id="rarity-badge">RARE</div>
-                            <h1 id="map-name-display">CLICK TO SPIN!</h1>
-                            <p id="map-desc-display">모든 맵 (11종) 무작위 추첨</p>
-                        </div>
+                <div class="roulette-wrapper" id="roulette-wrapper">
+                    <canvas id="fireworks-canvas"></canvas>
+                    <div class="roulette-box" id="roulette-box">
+                        <div class="map-tag" id="map-tag">READY</div>
+                        <h1 class="map-name" id="map-name">버튼을 눌러주세요</h1>
                     </div>
-                    <div class="particle-container" id="particle-container"></div>
                 </div>
 
-                <button class="action-btn spin-btn" id="spin-btn" onclick="startSuperSpin()">💥 스타드롭 맵 오픈!</button>
+                <button class="action-btn spin-btn" id="spin-btn" onclick="startRoulette()">🎰 맵 추첨!</button>
             </div>
         </section>
 
@@ -157,13 +153,12 @@
             </div>
         </section>
 
-        <!-- 5. 드래그 앤 드롭 팀 짜기 화면 -->
+        <!-- 5. 팀 짜기 화면 -->
         <section id="tab-draft" class="tab-content">
             <div class="card glass">
                 <h2>⚔️ 드래그 & 드롭 팀 드래프트</h2>
                 <p class="subtitle">하단의 선수를 드래그하여 위쪽 원하는 팀 상자에 놓아주세요!</p>
-                
-                <!-- 상단 팀 드롭 존 -->
+
                 <div class="dropzone-container">
                     <div class="dropzone kimchi" ondragover="allowDrop(event)" ondrop="dropPlayer(event, 'kimchi')">
                         <div class="dropzone-header">
@@ -190,12 +185,9 @@
                     </div>
                 </div>
 
-                <!-- 하단 매물대 목록 -->
                 <div class="pool-wrapper">
                     <h3>📦 남은 선수 매물대 (드래그하세요)</h3>
-                    <div class="pool-grid" id="player-pool" ondragover="allowDrop(event)" ondrop="dropPlayer(event, 'pool')">
-                        <!-- 선수 카드 생성 위치 -->
-                    </div>
+                    <div class="pool-grid" id="player-pool" ondragover="allowDrop(event)" ondrop="dropPlayer(event, 'pool')"></div>
                 </div>
             </div>
         </section>

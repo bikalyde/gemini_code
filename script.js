@@ -1,16 +1,9 @@
-// 발로란트 전 전체 맵 11종 등록
+// 발로란트 전 전체 맵 11종
 const valMaps = [
-    { name: "어센트 (Ascent)", theme: "#3b82f6" },
-    { name: "바인드 (Bind)", theme: "#d97706" },
-    { name: "헤이븐 (Haven)", theme: "#059669" },
-    { name: "스플릿 (Split)", theme: "#6366f1" },
-    { name: "아이스박스 (Icebox)", theme: "#0284c7" },
-    { name: "브리즈 (Breeze)", theme: "#0d9488" },
-    { name: "프랙처 (Fracture)", theme: "#65a30d" },
-    { name: "펄 (Pearl)", theme: "#4f46e5" },
-    { name: "로터스 (Lotus)", theme: "#b45309" },
-    { name: "선셋 (Sunset)", theme: "#ea580c" },
-    { name: "어비스 (Abyss)", theme: "#4338ca" }
+    "어센트 (Ascent)", "바인드 (Bind)", "헤이븐 (Haven)", 
+    "스플릿 (Split)", "아이스박스 (Icebox)", "브리즈 (Breeze)", 
+    "프랙처 (Fracture)", "펄 (Pearl)", "로터스 (Lotus)", 
+    "선셋 (Sunset)", "어비스 (Abyss)"
 ];
 
 // 초기 선수 목록
@@ -43,51 +36,100 @@ function switchTab(tabId) {
     homeBtn.style.display = (tabId === 'main') ? 'none' : 'block';
 }
 
-// 브롤스타즈 스타드롭 스타일 초화려 연출 룰렛
-function startSuperSpin() {
-    const card = document.getElementById('stardrop-card');
-    const badge = document.getElementById('rarity-badge');
-    const nameDisplay = document.getElementById('map-name-display');
-    const descDisplay = document.getElementById('map-desc-display');
-    const spinBtn = document.getElementById('spin-btn');
+// 🎰 감속 슬롯 연출 룰렛 + 폭죽
+function startRoulette() {
+    const box = document.getElementById('roulette-box');
+    const nameEl = document.getElementById('map-name');
+    const tagEl = document.getElementById('map-tag');
+    const btn = document.getElementById('spin-btn');
 
-    spinBtn.disabled = true;
-    card.className = "stardrop-card shake";
+    btn.disabled = true;
+    btn.innerText = "🎰 추첨하는 중...";
+    box.classList.remove('winning');
+    tagEl.innerText = "SPINNING...";
+    tagEl.style.background = "#ff4655";
 
-    const rarities = [
-        { name: "RARE", color: "#2563eb" },
-        { name: "SUPER RARE", color: "#7c3aed" },
-        { name: "EPIC", color: "#db2777" },
-        { name: "MYTHIC", color: "#ea580c" },
-        { name: "LEGENDARY 🌟", color: "#f59e0b" }
-    ];
+    let delay = 30; // 시작 속도 (매우 빠름)
+    let count = 0;
+    const maxCount = 35; // 총 교체 횟수
 
-    let step = 0;
-    
-    // 단계별 승급 애니메이션
-    const interval = setInterval(() => {
-        if (step < rarities.length) {
-            badge.innerText = rarities[step].name;
-            badge.style.backgroundColor = rarities[step].color;
-            card.style.background = `radial-gradient(circle, ${rarities[step].color} 0%, #111827 80%)`;
-            
-            // 임시 맵 이름 스위칭
-            const randomMap = valMaps[Math.floor(Math.random() * valMaps.length)];
-            nameDisplay.innerText = randomMap.name;
-            step++;
+    function step() {
+        const randomMap = valMaps[Math.floor(Math.random() * valMaps.length)];
+        nameEl.innerText = randomMap;
+        count++;
+
+        if (count < maxCount) {
+            // 뒤로 갈수록 대기 시간(delay)이 늘어나며 감속 연출 (따다다닥... 따.. 따... 멈춤)
+            delay += Math.floor(count * 0.8);
+            setTimeout(step, delay);
         } else {
-            clearInterval(interval);
+            // 당첨!
+            box.classList.add('winning');
+            tagEl.innerText = "SELECTED MAP";
+            tagEl.style.background = "#22c55e";
+            btn.disabled = false;
+            btn.innerText = "🎰 다시 추첨하기";
             
-            // 최종 확정
-            const finalMap = valMaps[Math.floor(Math.random() * valMaps.length)];
-            nameDisplay.innerText = finalMap.name;
-            descDisplay.innerText = "선택된 경기 진행 맵!";
-            
-            card.className = "stardrop-card legendary-glow";
-            spinBtn.disabled = false;
-            spinBtn.innerText = "💥 스타드롭 다시 오픈!";
+            triggerFireworks(); // 폭죽 발사!
         }
-    }, 450);
+    }
+
+    step();
+}
+
+// 🎉 폭죽 파티클 이펙트 (Canvas)
+function triggerFireworks() {
+    const canvas = document.getElementById('fireworks-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = canvas.parentElement.clientWidth;
+    canvas.height = canvas.parentElement.clientHeight;
+
+    const particles = [];
+    const colors = ['#ff4655', '#22c55e', '#3b82f6', '#eab308', '#a855f7', '#ffffff'];
+
+    for (let i = 0; i < 70; i++) {
+        particles.push({
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            dx: (Math.random() - 0.5) * 12,
+            dy: (Math.random() - 0.5) * 12,
+            size: Math.random() * 6 + 3,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: 1,
+            life: Math.random() * 0.03 + 0.015
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = false;
+
+        particles.forEach(p => {
+            if (p.alpha > 0) {
+                active = true;
+                p.x += p.dx;
+                p.y += p.dy;
+                p.dy += 0.15; // 중력 효과
+                p.alpha -= p.life;
+
+                ctx.globalAlpha = Math.max(0, p.alpha);
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        });
+
+        if (active) {
+            requestAnimationFrame(animate);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    animate();
 }
 
 // 대전 현황판 승패
@@ -113,12 +155,10 @@ function dropPlayer(ev, targetTeam) {
         return;
     }
 
-    // 기존 팀에서 제거
     Object.keys(teamLists).forEach(key => {
         teamLists[key] = teamLists[key].filter(p => p.id !== playerId);
     });
 
-    // 이동할 항목 찾아 삽입
     const playerObj = playersData.find(p => p.id === playerId);
     if (playerObj) teamLists[targetTeam].push(playerObj);
 
@@ -142,7 +182,6 @@ function renderDraftUI() {
         });
     });
 
-    // Pool
     const poolGrid = document.getElementById('player-pool');
     poolGrid.innerHTML = "";
     teamLists.pool.forEach(p => {
