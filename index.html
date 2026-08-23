@@ -4,8 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VALORANT CUSTOM MATCH</title>
-    <!-- CSS 연결 경로 필수 -->
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts (발로란트 감성 폰트) -->
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@700&display=swap" rel="stylesheet">
 </head>
+<body>
+
+    <!-- 상단 헤더 & 내비게이션 -->
+    <header class="header">
+        <div class="header-title">VALORANT LEAGUE <span>SEASON 2026</span></div>
+        <button id="top-home-btn" class="home-btn" onclick="switchTab('main')" style="display: none;">🏠 메인으로 돌아가기</button>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. 메인 메뉴 탭 -->
+        <div id="tab-main" class="tab-content active">
+            <h1 class="main-title">VALORANT CUSTOM MATCH</h1>
+            <p class="subtitle">원하는 메뉴를 선택하여 내전을 진행하세요.</p>
+
+            <div class="menu-grid">
+                <div class="menu-card" onclick="switchTab('map')">
+                    <div class="menu-icon">🎰</div>
+                    <h3>맵 추첨하기</h3>
+                    <p>회전초밥 슬롯 연출 및 폭죽 이펙트 맵 무작위 추첨</p>
+                </div>
+                <div class="menu-card" onclick="switchTab('matches')">
+                    <div class="menu-icon">📊</div>
+                    <h3>대전 현황판</h3>
+                    <p>팀 간 대진표 및 승/패 실시간 기록</p>
+                </div>
+                <div class="menu-card" onclick="switchTab('teams')">
+                    <div class="menu-icon">🛡️</div>
+                    <h3>팀 정보</h3>
+                    <p>김치 · 피자 · 탕수육 팀 로스터 확인</p>
+                </div>
+                <div class="menu-card" onclick="switchTab('draft')">
+                    <div class="menu-icon">⚔️</div>
+                    <h3>팀 짜기 (드래그 앤 드롭)</h3>
+                    <p>선수를 마우스로 끌어서 원하는 팀에 드롭하세요!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 맵 추첨 탭 -->
+        <div id="tab-map" class="tab-content">
+            <h2 class="section-title">🎰 VALORANT MAP SELECTOR</h2>
+            <p class="section-desc">추첨 버튼을 누르면 무작위로 경기 맵이 결정됩니다.</p>
+
+            <div id="carousel-container">
+                <div class="carousel-pointer">▼</div>
+                <div id="carousel-track"></div>
+                <canvas id="fireworks-canvas"></canvas>
+            </div>
+
+            <div class="btn-wrap">
+                <button id="spin-btn" class="action-btn" onclick="startRoulette()">🎰 맵 추첨 시작하기</button>
+            </div>
+        </div>
+
+        <!-- 3. 대전 현황판 탭 -->
+        <div id="tab-matches" class="tab-content">
+            <h2 class="section-title">📊 MATCH BOARD</h2>
+            <div class="match-list">
+                <div class="match-card">
+                    <h3>MATCH 1 : 김치 팀 VS 피자 팀</h3>
+                    <div id="m1-status" class="match-status">진행 전</div>
+                    <div class="btn-group">
+                        <button onclick="setWinner(1, 'kimchi')">김치 승</button>
+                        <button onclick="setWinner(1, 'pizza')">피자 승</button>
+                    </div>
+                </div>
+                <div class="match-card">
+                    <h3>MATCH 2 : 피자 팀 VS 탕수육 팀</h3>
+                    <div id="m2-status" class="match-status">진행 전</div>
+                    <div class="btn-group">
+                        <button onclick="setWinner(2, 'pizza')">피자 승</button>
+                        <button onclick="setWinner(2, 'tangsuyuk')">탕수육 승</button>
+                    </div>
+                </div>
+                <div class="match-card">
+                    <h3>MATCH 3 : 김치 팀 VS 탕수육 팀</h3>
+                    <div id="m3-status" class="match-status">진행 전</div>
+                    <div class="btn-group">
+                        <button onclick="setWinner(3, 'kimchi')">김치 승</button>
+                        <button onclick="setWinner(3, 'tangsuyuk')">탕수육 승</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 팀 정보 탭 -->
+        <div id="tab-teams" class="tab-content">
+            <h2 class="section-title">🛡️ TEAM ROSTERS</h2>
+            <div class="team-info-grid">
+                <div class="info-card">
+                    <h3>🔴 김치 팀</h3>
+                    <ul id="info-kimchi"></ul>
+                </div>
+                <div class="info-card">
+                    <h3>🟡 피자 팀</h3>
+                    <ul id="info-pizza"></ul>
+                </div>
+                <div class="info-card">
+                    <h3>🔵 탕수육 팀</h3>
+                    <ul id="info-tangsuyuk"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 드래그 앤 드롭 팀 짜기 탭 -->
+        <div id="tab-draft" class="tab-content">
+            <h2 class="section-title">⚔️ TEAM DRAFT</h2>
+            <div class="draft-container">
+                <div class="team-box" ondragover="allowDrop(event)" ondrop="dropPlayer(event, 'kimchi')">
+                    <h3>🔴 김치 팀 (<span id="count-kimchi">0/5</span>)</h3>
+                    <div id="drop-kimchi" class="drop-zone"></div>
+                </div>
+                <div class="team-box" ondragover="allowDrop(event)" ondrop="dropPlayer(event, 'pizza')">
+                    <h3>🟡 피자 팀 (<span id="count-pizza">0/5</span>)</h3>
+                    <div id="drop-pizza" class="drop-zone"></div>
+                </div>
+                <div class="team-box" ondragover="allowDrop(event)" ondrop="dropPlayer(event, 'tangsuyuk')">
+                    <h3>🔵 탕수육 팀 (<span id="count-tangsuyuk">0/5</span>)</h3>
+                    <div id="drop-tangsuyuk" class="drop-zone"></div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 30px; color: #a0aec0;">선수 풀 (대기중)</h3>
+            <div id="player-pool" class="pool-zone" ondragover="allowDrop(event)" ondrop="dropPlayer(event, 'pool')"></div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
