@@ -1,16 +1,16 @@
-// 라이엇 공식 VALORANT API 이미지 데이터
+// 외부 CDN 차단 우회(WSERV)를 적용한 고화질 VALORANT 맵 이미지 URL
 const valMaps = [
-    { name: "어센트", enName: "ASCENT", bg: "https://media.valorant-api.com/maps/7edd9e3d-4191-708d-9b09-24b73708a5f1/splash.png", color: "#4a5568" },
-    { name: "바인드", enName: "BIND", bg: "https://media.valorant-api.com/maps/2c9d3312-4a6e-4b28-9fef-bc27bd852386/splash.png", color: "#7c2d12" },
-    { name: "헤이븐", enName: "HAVEN", bg: "https://media.valorant-api.com/maps/2bee0692-4b96-7a70-9d0d-05a3277085a8/splash.png", color: "#065f46" },
-    { name: "스플릿", enName: "SPLIT", bg: "https://media.valorant-api.com/maps/d2b789a4-4be0-b1d7-1761-b7a407a06d1b/splash.png", color: "#1e3a8a" },
-    { name: "아이스박스", enName: "ICEBOX", bg: "https://media.valorant-api.com/maps/e29c1b92-4168-811c-d83d-0b9247d52f61/splash.png", color: "#1e1b4b" },
-    { name: "브리즈", enName: "BREEZE", bg: "https://media.valorant-api.com/maps/2fb43247-4707-b99e-277c-8e8e36120a9b/splash.png", color: "#0f766e" },
-    { name: "프랙처", enName: "FRACTURE", bg: "https://media.valorant-api.com/maps/b52c1225-4a56-b90e-73a3-a184a8330998/splash.png", color: "#365314" },
-    { name: "펄", enName: "PEARL", bg: "https://media.valorant-api.com/maps/fd2673d9-417d-ad7b-8801-11af3030706c/splash.png", color: "#172554" },
-    { name: "로터스", enName: "LOTUS", bg: "https://media.valorant-api.com/maps/2fe4ed3a-450a-948b-6d6b-e89a78e680a9/splash.png", color: "#701a75" },
-    { name: "선셋", enName: "SUNSET", bg: "https://media.valorant-api.com/maps/92584fbe-486a-b3b2-9afe-09a950746d6d/splash.png", color: "#831843" },
-    { name: "어비스", enName: "ABYSS", bg: "https://media.valorant-api.com/maps/2240863f-42e7-a722-2615-38a163283f58/splash.png", color: "#312e81" }
+    { name: "어센트", enName: "ASCENT", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/7edd9e3d-4191-708d-9b09-24b73708a5f1/splash.png" },
+    { name: "바인드", enName: "BIND", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/2c9d3312-4a6e-4b28-9fef-bc27bd852386/splash.png" },
+    { name: "헤이븐", enName: "HAVEN", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/2bee0692-4b96-7a70-9d0d-05a3277085a8/splash.png" },
+    { name: "스플릿", enName: "SPLIT", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/d2b789a4-4be0-b1d7-1761-b7a407a06d1b/splash.png" },
+    { name: "아이스박스", enName: "ICEBOX", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/e29c1b92-4168-811c-d83d-0b9247d52f61/splash.png" },
+    { name: "브리즈", enName: "BREEZE", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/2fb43247-4707-b99e-277c-8e8e36120a9b/splash.png" },
+    { name: "프랙처", enName: "FRACTURE", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/b52c1225-4a56-b90e-73a3-a184a8330998/splash.png" },
+    { name: "펄", enName: "PEARL", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/fd2673d9-417d-ad7b-8801-11af3030706c/splash.png" },
+    { name: "로터스", enName: "LOTUS", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/2fe4ed3a-450a-948b-6d6b-e89a78e680a9/splash.png" },
+    { name: "선셋", enName: "SUNSET", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/92584fbe-486a-b3b2-9afe-09a950746d6d/splash.png" },
+    { name: "어비스", enName: "ABYSS", bg: "https://wsrv.nl/?url=https://media.valorant-api.com/maps/2240863f-42e7-a722-2615-38a163283f58/splash.png" }
 ];
 
 const CARD_WIDTH = 240;
@@ -31,20 +31,7 @@ function initCarousel() {
         const card = document.createElement('div');
         card.className = 'map-card';
         card.id = `map-card-${idx}`;
-        
-        // 기본 배경색 설정 (이미지 로딩 실패 시 대비)
-        card.style.backgroundColor = map.color || '#1e293b';
-
-        // 이미지 객체 생성 테스트 및 실패 시 Fallback 처리
-        const img = new Image();
-        img.src = map.bg;
-        img.onload = () => {
-            card.style.backgroundImage = `url("${map.bg}")`;
-        };
-        img.onerror = () => {
-            // 이미지 로딩 차단 시 발로란트 스타일 배경 적용
-            card.style.background = `linear-gradient(135deg, ${map.color || '#1e293b'}, #0f172a)`;
-        };
+        card.style.backgroundImage = `url("${map.bg}")`;
 
         card.innerHTML = `
             <div class="map-card-overlay">
