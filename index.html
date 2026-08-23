@@ -10,85 +10,131 @@
 <body>
     <div class="glass-bg"></div>
 
-    <!-- 네비게이션 바 -->
-    <nav class="navbar">
+    <!-- 헤더 (상단 메뉴 제거, 로고 클릭 시 메인 이동) -->
+    <header class="header">
         <div class="logo" onclick="switchTab('main')">VALORANT <span>LEAGUE</span></div>
-        <div class="nav-links">
-            <button class="nav-btn active" onclick="switchTab('main')">메인</button>
-            <button class="nav-btn" onclick="switchTab('map')">맵 추첨</button>
-            <button class="nav-btn" onclick="switchTab('scoreboard')">대전 현황판</button>
-            <button class="nav-btn" onclick="switchTab('teams')">팀 정보</button>
-            <button class="nav-btn highlight" onclick="switchTab('draft')">팀 짜기</button>
-        </div>
-    </nav>
+        <button class="home-btn" id="top-home-btn" onclick="switchTab('main')" style="display: none;">🏠 메인으로</button>
+    </header>
 
     <main class="content">
-        <!-- 1. 메인 화면 -->
+        <!-- 1. 메인 화면 (큼직한 메뉴 버튼들) -->
         <section id="tab-main" class="tab-content active">
             <div class="hero">
                 <span class="badge">SEASON 2026</span>
                 <h1>VALORANT CUSTOM MATCH</h1>
-                <p>감성 넘치는 내전 라이브 드래프트 & 스코어보드</p>
-                <div class="hero-btns">
-                    <button class="cta-btn primary" onclick="switchTab('map')">🗺️ 맵 추첨하러 가기</button>
-                    <button class="cta-btn secondary" onclick="switchTab('draft')">⚔️ 팀 구성하기</button>
+                <p>원하는 메뉴를 선택하여 내전을 진행하세요.</p>
+            </div>
+
+            <div class="main-menu-grid">
+                <div class="menu-card" onclick="switchTab('map')">
+                    <div class="menu-icon">🎰</div>
+                    <div class="menu-info">
+                        <h2>맵 추첨하기</h2>
+                        <p>화려한 룰렛 모션으로 경기 맵을 결정합니다.</p>
+                    </div>
+                </div>
+
+                <div class="menu-card" onclick="switchTab('scoreboard')">
+                    <div class="menu-icon">📊</div>
+                    <div class="menu-info">
+                        <h2>대전 현황판</h2>
+                        <p>팀 간 대진표 및 승/패 실시간 기록</p>
+                    </div>
+                </div>
+
+                <div class="menu-card" onclick="switchTab('teams')">
+                    <div class="menu-icon">🛡️</div>
+                    <div class="menu-info">
+                        <h2>팀 정보</h2>
+                        <p>김치 · 피자 · 탕수육 팀 로스터 확인</p>
+                    </div>
+                </div>
+
+                <div class="menu-card highlight" onclick="switchTab('draft')">
+                    <div class="menu-icon">⚔️</div>
+                    <div class="menu-info">
+                        <h2>팀 짜기 (드래프트)</h2>
+                        <p>선수 드래프트 및 자동으로 팀 정보 반영</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2. 맵 추첨 화면 -->
+        <!-- 2. 맵 추첨 화면 (시각적 대형 룰렛) -->
         <section id="tab-map" class="tab-content">
-            <div class="card glass">
-                <h2>🎰 BO3 맵 드로우</h2>
-                <p class="subtitle">세트별 맵을 무작위로 추첨합니다.</p>
+            <div class="card glass text-center">
+                <h2>🎰 MAP SELECTION ROULETTE</h2>
+                <p class="subtitle">버튼을 눌러 룰렛을 돌아게 하세요!</p>
                 
-                <div class="map-slots">
-                    <div class="map-card"><span class="set-label">1세트</span><div id="map-1" class="map-name">READY</div></div>
-                    <div class="map-card"><span class="set-label">2세트</span><div id="map-2" class="map-name">READY</div></div>
-                    <div class="map-card"><span class="set-label">3세트(최종)</span><div id="map-3" class="map-name">READY</div></div>
+                <div class="roulette-container" id="roulette-box">
+                    <div class="roulette-overlay"></div>
+                    <div class="roulette-display" id="roulette-display">
+                        <span class="roulette-tag">READY</span>
+                        <h3 id="roulette-map-name">맵 추첨 대기중</h3>
+                    </div>
+                    <div class="win-confetti" id="confetti"></div>
                 </div>
 
-                <button class="action-btn" id="roll-btn" onclick="startMapRoll()">맵 룰렛 돌리기 🎲</button>
+                <button class="action-btn spin-btn" id="spin-btn" onclick="startRoulette()">🎲 맵 추첨 시작!</button>
             </div>
         </section>
 
         <!-- 3. 대전 현황판 화면 -->
         <section id="tab-scoreboard" class="tab-content">
             <div class="card glass">
-                <h2>📊 실시간 대전 현황판</h2>
-                <div class="match-grid">
-                    <!-- 경기 1 -->
-                    <div class="match-card">
-                        <div class="match-title">1경기</div>
-                        <div class="score-board">
-                            <span class="team-name">김치</span>
-                            <input type="number" value="0" min="0" max="2" id="s1-1">
-                            <span class="vs">VS</span>
-                            <input type="number" value="0" min="0" max="2" id="s1-2">
-                            <span class="team-name">피자</span>
+                <h2>📊 대진표 및 승패 현황</h2>
+                <p class="subtitle">각 경기의 승리 팀을 클릭하여 승패를 업데이트하세요.</p>
+
+                <div class="match-list">
+                    <!-- MATCH 1 -->
+                    <div class="match-item">
+                        <div class="match-header">MATCH 1</div>
+                        <div class="match-body">
+                            <div class="team-slot kimchi" id="m1-t1">
+                                <span>김치 팀</span>
+                                <button onclick="setWinner(1, 'kimchi')">승리</button>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="team-slot pizza" id="m1-t2">
+                                <span>피자 팀</span>
+                                <button onclick="setWinner(1, 'pizza')">승리</button>
+                            </div>
                         </div>
+                        <div class="match-status" id="m1-status">경기 대기 중</div>
                     </div>
-                    <!-- 경기 2 -->
-                    <div class="match-card">
-                        <div class="match-title">2경기</div>
-                        <div class="score-board">
-                            <span class="team-name">피자</span>
-                            <input type="number" value="0" min="0" max="2" id="s2-1">
-                            <span class="vs">VS</span>
-                            <input type="number" value="0" min="0" max="2" id="s2-2">
-                            <span class="team-name">탕수육</span>
+
+                    <!-- MATCH 2 -->
+                    <div class="match-item">
+                        <div class="match-header">MATCH 2</div>
+                        <div class="match-body">
+                            <div class="team-slot pizza" id="m2-t1">
+                                <span>피자 팀</span>
+                                <button onclick="setWinner(2, 'pizza')">승리</button>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="team-slot tangsuyuk" id="m2-t2">
+                                <span>탕수육 팀</span>
+                                <button onclick="setWinner(2, 'tangsuyuk')">승리</button>
+                            </div>
                         </div>
+                        <div class="match-status" id="m2-status">경기 대기 중</div>
                     </div>
-                    <!-- 경기 3 -->
-                    <div class="match-card">
-                        <div class="match-title">3경기</div>
-                        <div class="score-board">
-                            <span class="team-name">탕수육</span>
-                            <input type="number" value="0" min="0" max="2" id="s3-1">
-                            <span class="vs">VS</span>
-                            <input type="number" value="0" min="0" max="2" id="s3-2">
-                            <span class="team-name">김치</span>
+
+                    <!-- MATCH 3 -->
+                    <div class="match-item">
+                        <div class="match-header">MATCH 3</div>
+                        <div class="match-body">
+                            <div class="team-slot tangsuyuk" id="m3-t1">
+                                <span>탕수육 팀</span>
+                                <button onclick="setWinner(3, 'tangsuyuk')">승리</button>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="team-slot kimchi" id="m3-t2">
+                                <span>김치 팀</span>
+                                <button onclick="setWinner(3, 'kimchi')">승리</button>
+                            </div>
                         </div>
+                        <div class="match-status" id="m3-status">경기 대기 중</div>
                     </div>
                 </div>
             </div>
@@ -97,25 +143,26 @@
         <!-- 4. 팀 정보 화면 -->
         <section id="tab-teams" class="tab-content">
             <div class="teams-grid">
-                <div class="card glass team-card red">
-                    <h3>🔴 김치 팀</h3>
+                <div class="card glass team-card kimchi">
+                    <h3>🌶️ 김치 팀</h3>
                     <ul class="member-list" id="info-kimchi"><li>지명된 선수가 없습니다.</li></ul>
                 </div>
-                <div class="card glass team-card yellow">
-                    <h3>🟡 피자 팀</h3>
+                <div class="card glass team-card pizza">
+                    <h3>🍕 피자 팀</h3>
                     <ul class="member-list" id="info-pizza"><li>지명된 선수가 없습니다.</li></ul>
                 </div>
-                <div class="card glass team-card blue">
-                    <h3>🔵 탕수육 팀</h3>
+                <div class="card glass team-card tangsuyuk">
+                    <h3>🥢 탕수육 팀</h3>
                     <ul class="member-list" id="info-tangsuyuk"><li>지명된 선수가 없습니다.</li></ul>
                 </div>
             </div>
         </section>
 
-        <!-- 5. 팀 짜기(드래프트) 화면 -->
+        <!-- 5. 팀 짜기 화면 -->
         <section id="tab-draft" class="tab-content">
             <div class="card glass">
-                <h2>⚡ 라이브 드래프트</h2>
+                <h2>⚔️ 라이브 팀 드래프트</h2>
+                <p class="subtitle">선수를 각 팀으로지명하면 팀 정보 페이지에 실시간 반영됩니다.</p>
                 <div class="tier-columns">
                     <div class="tier-col">
                         <h4>👑 총사령관</h4>

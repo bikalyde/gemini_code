@@ -1,4 +1,15 @@
-const mapPool = ["어센트", "바인드", "헤이븐", "스플릿", "아이스박스", "브리즈", "프랙처", "펄", "로터스", "어비스"];
+const mapPool = [
+    { name: "어센트", color: "#4a5568" },
+    { name: "바인드", color: "#7c2d12" },
+    { name: "헤이븐", color: "#065f46" },
+    { name: "스플릿", color: "#1e3a8a" },
+    { name: "아이스박스", color: "#0284c7" },
+    { name: "브리즈", color: "#0d9488" },
+    { name: "프랙처", color: "#3f6212" },
+    { name: "펄", color: "#4338ca" },
+    { name: "로터스", color: "#854d0e" },
+    { name: "어비스", color: "#312e81" }
+];
 
 const players = [
     { id: 1, name: "유저1 (팀장A)", tier: "captain" },
@@ -18,61 +29,70 @@ const players = [
     { id: 15, name: "유저15", tier: "high" }
 ];
 
-const teamData = {
-    kimchi: [],
-    pizza: [],
-    tangsuyuk: []
-};
+const teamData = { kimchi: [], pizza: [], tangsuyuk: [] };
 
 // 탭 전환 함수
 function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
 
     const targetTab = document.getElementById(`tab-${tabId}`);
     if (targetTab) targetTab.classList.add('active');
 
-    const navBtns = document.querySelectorAll('.nav-btn');
-    const tabMap = { 'main': 0, 'map': 1, 'scoreboard': 2, 'teams': 3, 'draft': 4 };
-    if (tabMap[tabId] !== undefined) navBtns[tabMap[tabId]].classList.add('active');
+    const homeBtn = document.getElementById('top-home-btn');
+    if (tabId === 'main') {
+        homeBtn.style.display = 'none';
+    } else {
+        homeBtn.style.display = 'block';
+    }
 }
 
-// 감성 맵 롤링 기능 (띠디디딩 룰렛)
-function startMapRoll() {
-    const btn = document.getElementById('roll-btn');
-    btn.disabled = true;
-    btn.innerText = "추첨 중...";
+// 대형 룰렛 추첨 모션
+function startRoulette() {
+    const btn = document.getElementById('spin-btn');
+    const box = document.getElementById('roulette-box');
+    const nameEl = document.getElementById('roulette-map-name');
 
-    const shuffled = [...mapPool].sort(() => 0.5 - Math.random());
-    const finalMaps = shuffled.slice(0, 3);
+    btn.disabled = true;
+    btn.innerText = "🎰 룰렛 돌어가는 중...";
+    box.classList.remove('winner');
 
     let counter = 0;
-    const interval = setInterval(() => {
-        document.getElementById('map-1').innerText = mapPool[Math.floor(Math.random() * mapPool.length)];
-        document.getElementById('map-2').innerText = mapPool[Math.floor(Math.random() * mapPool.length)];
-        document.getElementById('map-3').innerText = mapPool[Math.floor(Math.random() * mapPool.length)];
-        counter++;
+    let speed = 50;
 
-        if (counter > 20) {
-            clearInterval(interval);
-            document.getElementById('map-1').innerText = finalMaps[0];
-            document.getElementById('map-2').innerText = finalMaps[1];
-            document.getElementById('map-3').innerText = finalMaps[2];
+    function spin() {
+        const randomMap = mapPool[Math.floor(Math.random() * mapPool.length)];
+        nameEl.innerText = randomMap.name;
+        box.style.backgroundColor = randomMap.color;
+
+        counter++;
+        if (counter < 25) {
+            setTimeout(spin, speed);
+        } else {
+            // 당첨 효과
+            box.classList.add('winner');
             btn.disabled = false;
-            btn.innerText = "다시 추첨하기 🎲";
+            btn.innerText = "🎲 다시 추첨하기";
         }
-    }, 80);
+    }
+
+    spin();
 }
 
-// 드래프트 화면 렌더링
+// 승패 설정 함수
+function setWinner(matchNum, winningTeam) {
+    const statusEl = document.getElementById(`m${matchNum}-status`);
+    const teamNames = { kimchi: "김치 팀", pizza: "피자 팀", tangsuyuk: "탕수육 팀" };
+
+    statusEl.innerHTML = `<span style="color: #22c55e; font-weight: 800;">🏆 ${teamNames[winningTeam]} 승리!</span>`;
+}
+
+// 드래프트 & 팀 연동
 function renderDraft() {
     const capList = document.getElementById('draft-captains');
     const midList = document.getElementById('draft-mid');
     const highList = document.getElementById('draft-high');
 
-    capList.innerHTML = "";
-    midList.innerHTML = "";
-    highList.innerHTML = "";
+    capList.innerHTML = ""; midList.innerHTML = ""; highList.innerHTML = "";
 
     players.forEach(p => {
         const html = `
@@ -85,14 +105,12 @@ function renderDraft() {
                 </div>
             </div>
         `;
-
         if (p.tier === "captain") capList.innerHTML += html;
         if (p.tier === "mid") midList.innerHTML += html;
         if (p.tier === "high") highList.innerHTML += html;
     });
 }
 
-// 선수 지명 및 팀 정보 자동 연동
 function pickPlayer(playerId, teamKey) {
     if (teamData[teamKey].length >= 5) {
         alert("이 팀은 이미 5명이 차있습니다!");
@@ -109,7 +127,6 @@ function pickPlayer(playerId, teamKey) {
     }
 }
 
-// 팀 정보 화면 렌더링
 function renderTeamInfo() {
     ['kimchi', 'pizza', 'tangsuyuk'].forEach(teamKey => {
         const ul = document.getElementById(`info-${teamKey}`);

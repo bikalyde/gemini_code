@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body {
@@ -13,7 +13,6 @@ body {
     overflow-x: hidden;
 }
 
-/* 감성적인 애니메이션 배경 블러 */
 .glass-bg {
     position: fixed;
     top: -20%;
@@ -26,90 +25,66 @@ body {
     z-index: -1;
 }
 
-/* 애플 스타일 애플리케이션 바 */
-.navbar {
+/* Header */
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 40px;
-    background: rgba(18, 22, 31, 0.7);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    padding: 24px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
 .logo {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 24px;
+    font-weight: 900;
     letter-spacing: 1px;
     cursor: pointer;
+    user-select: none;
 }
 
-.logo span {
-    color: #ff4655;
-}
+.logo span { color: #ff4655; }
 
-.nav-links {
-    display: flex;
-    gap: 8px;
-}
-
-.nav-btn {
-    background: transparent;
-    border: none;
-    color: #9ca3af;
-    padding: 8px 16px;
+.home-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 8px 18px;
     border-radius: 20px;
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: 700;
     cursor: pointer;
 }
 
-.nav-btn:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.05);
+.home-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
 }
 
-.nav-btn.active {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.12);
-}
-
-.nav-btn.highlight {
-    background: #ff4655;
-    color: #fff;
-}
-
-.nav-btn.highlight:hover {
-    background: #e03e4d;
-    box-shadow: 0 4px 15px rgba(255, 70, 85, 0.4);
-}
-
-/* 메인 컨텐츠 영역 */
+/* Content & Motion */
 .content {
     max-width: 1100px;
-    margin: 40px auto;
+    margin: 10px auto 60px;
     padding: 0 20px;
 }
 
 .tab-content {
     display: none;
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px) scale(0.98);
 }
 
 .tab-content.active {
     display: block;
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
-/* 히어로 세션 */
+.text-center { text-align: center; }
+
+/* Main Hero & Menu Cards */
 .hero {
     text-align: center;
-    padding: 80px 20px;
+    padding: 40px 20px 30px;
 }
 
 .badge {
@@ -119,198 +94,218 @@ body {
     border-radius: 20px;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 1px;
 }
 
 .hero h1 {
-    font-size: 52px;
+    font-size: 48px;
     font-weight: 900;
-    margin: 20px 0 10px;
-    background: linear-gradient(180deg, #fff 0%, #a5b4fc 100%);
+    margin: 15px 0 10px;
+    background: linear-gradient(180deg, #ffffff 0%, #a5b4fc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.hero p {
-    color: #9ca3af;
-    font-size: 18px;
-    margin-bottom: 30px;
+.hero p { color: #9ca3af; font-size: 17px; }
+
+.main-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
 }
 
-.hero-btns {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.cta-btn {
-    padding: 14px 28px;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 15px;
-    border: none;
-    cursor: pointer;
-}
-
-.cta-btn.primary {
-    background: #ff4655;
-    color: #fff;
-    box-shadow: 0 10px 25px rgba(255, 70, 85, 0.3);
-}
-
-.cta-btn.secondary {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-    backdrop-filter: blur(10px);
-}
-
-/* 카드 및 글래스모피즘 */
-.card.glass {
+.menu-card {
     background: rgba(22, 27, 38, 0.6);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
     padding: 30px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-.subtitle {
-    color: #6b7280;
-    margin-top: 5px;
-    margin-bottom: 25px;
-}
-
-/* 맵 룰렛 */
-.map-slots {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.map-card {
-    flex: 1;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 25px;
-    text-align: center;
-}
-
-.set-label {
-    font-size: 12px;
-    color: #ff4655;
-    font-weight: 700;
-}
-
-.map-name {
-    font-size: 24px;
-    font-weight: 800;
-    margin-top: 10px;
-    color: #fff;
-}
-
-.action-btn {
-    width: 100%;
-    padding: 16px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #ff4655, #d93845);
-    border: none;
-    color: #fff;
-    font-weight: 800;
-    font-size: 16px;
     cursor: pointer;
-}
-
-/* 현황판 */
-.match-grid {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
 }
 
-.match-card {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 20px;
+.menu-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.menu-card.highlight {
+    border-color: rgba(255, 70, 85, 0.4);
+    background: linear-gradient(135deg, rgba(22, 27, 38, 0.8), rgba(255, 70, 85, 0.1));
+}
+
+.menu-icon { font-size: 40px; }
+
+.menu-info h2 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+.menu-info p { font-size: 13px; color: #9ca3af; line-height: 1.4; }
+
+/* Cards Layout */
+.card.glass {
+    background: rgba(22, 27, 38, 0.6);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 35px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.subtitle { color: #9ca3af; margin: 8px 0 25px; font-size: 14px; }
+
+/* Map Roulette visual */
+.roulette-container {
+    height: 260px;
+    border-radius: 20px;
+    background: #11151c;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    background-size: cover;
+    background-position: center;
+}
+
+.roulette-display {
+    z-index: 2;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+}
+
+.roulette-tag {
+    background: #ff4655;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.roulette-display h3 {
+    font-size: 42px;
+    font-weight: 900;
+    margin-top: 10px;
+}
+
+/* Win Effect Glow */
+.roulette-container.winner {
+    border-color: #f59e0b;
+    box-shadow: 0 0 50px rgba(245, 158, 11, 0.6);
+    animation: pulseGlow 1s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from { box-shadow: 0 0 30px rgba(245, 158, 11, 0.4); }
+    to { box-shadow: 0 0 60px rgba(245, 158, 11, 0.8); }
+}
+
+.spin-btn {
+    font-size: 18px;
+    padding: 18px;
     border-radius: 16px;
+    background: linear-gradient(135deg, #ff4655, #d93845);
+    color: white;
+    border: none;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+}
+
+.spin-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 70, 85, 0.4);
+}
+
+/* Match Scoreboard */
+.match-list { display: flex; flex-direction: column; gap: 20px; }
+
+.match-item {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    padding: 20px;
+}
+
+.match-header { font-size: 13px; font-weight: 800; color: #ff4655; margin-bottom: 12px; }
+
+.match-body {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-}
-
-.match-title {
-    font-weight: 700;
-    color: #9ca3af;
-}
-
-.score-board {
-    display: flex;
-    align-items: center;
     gap: 15px;
 }
 
-.team-name {
-    font-weight: 800;
-    font-size: 18px;
-}
-
-.score-board input {
-    width: 50px;
-    height: 45px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    color: #fff;
-    font-size: 20px;
-    font-weight: 800;
-    text-align: center;
-}
-
-.vs {
-    color: #4b5563;
-    font-weight: 900;
-}
-
-/* 팀 정보 & 드래프트 */
-.teams-grid, .tier-columns {
-    display: flex;
-    gap: 20px;
-}
-
-.team-card {
+.team-slot {
     flex: 1;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 15px 20px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 800;
 }
 
-.team-card.red { border-top: 4px solid #ff4655; }
-.team-card.yellow { border-top: 4px solid #eab308; }
-.team-card.blue { border-top: 4px solid #3b82f6; }
+.team-slot.kimchi { border-left: 4px solid #ff4655; }
+.team-slot.pizza { border-left: 4px solid #eab308; }
+.team-slot.tangsuyuk { border-left: 4px solid #3b82f6; }
 
-.member-list {
-    list-style: none;
-    margin-top: 15px;
+.team-slot button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 700;
 }
 
+.team-slot button:hover { background: #ff4655; }
+
+.team-slot.win {
+    background: rgba(34, 197, 94, 0.2);
+    border-color: #22c55e;
+}
+
+.vs-badge { font-weight: 900; color: #4b5563; font-size: 16px; }
+
+.match-status {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #9ca3af;
+    text-align: right;
+    font-weight: 600;
+}
+
+/* Teams & Draft */
+.teams-grid, .tier-columns { display: flex; gap: 20px; }
+
+.team-card { flex: 1; }
+.team-card.kimchi { border-top: 4px solid #ff4655; }
+.team-card.pizza { border-top: 4px solid #eab308; }
+.team-card.tangsuyuk { border-top: 4px solid #3b82f6; }
+
+.member-list { list-style: none; margin-top: 15px; }
 .member-list li {
-    padding: 10px 0;
+    padding: 12px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     color: #d1d5db;
+    font-weight: 500;
 }
 
-.tier-col {
-    flex: 1;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    border-radius: 16px;
-}
-
-.tier-col h4 {
-    margin-bottom: 15px;
-    color: #9ca3af;
-}
+.tier-col { flex: 1; background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 16px; }
+.tier-col h4 { margin-bottom: 15px; color: #9ca3af; }
 
 .player-item {
     background: rgba(255, 255, 255, 0.05);
-    padding: 12px;
+    padding: 12px 15px;
     border-radius: 12px;
     margin-bottom: 8px;
     display: flex;
@@ -318,11 +313,7 @@ body {
     align-items: center;
 }
 
-.pick-btns {
-    display: flex;
-    gap: 4px;
-}
-
+.pick-btns { display: flex; gap: 4px; }
 .pick-btns button {
     border: none;
     padding: 6px 10px;
