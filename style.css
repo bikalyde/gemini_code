@@ -25,7 +25,7 @@ body {
     z-index: -1;
 }
 
-/* Header */
+/* Header & Nav */
 .header {
     display: flex;
     justify-content: space-between;
@@ -42,7 +42,6 @@ body {
     cursor: pointer;
     user-select: none;
 }
-
 .logo span { color: #ff4655; }
 
 .home-btn {
@@ -54,276 +53,144 @@ body {
     font-weight: 700;
     cursor: pointer;
 }
+.home-btn:hover { background: rgba(255, 255, 255, 0.18); transform: translateY(-2px); }
 
-.home-btn:hover {
-    background: rgba(255, 255, 255, 0.18);
-    transform: translateY(-2px);
-}
-
-/* Content & Motion */
-.content {
-    max-width: 1100px;
-    margin: 10px auto 60px;
-    padding: 0 20px;
-}
-
-.tab-content {
-    display: none;
-    opacity: 0;
-    transform: translateY(20px) scale(0.98);
-}
-
-.tab-content.active {
-    display: block;
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
-
+/* Layout & Tabs */
+.content { max-width: 1100px; margin: 10px auto 60px; padding: 0 20px; }
+.tab-content { display: none; opacity: 0; transform: translateY(20px) scale(0.98); }
+.tab-content.active { display: block; opacity: 1; transform: translateY(0) scale(1); }
 .text-center { text-align: center; }
 
-/* Main Hero & Menu Cards */
-.hero {
-    text-align: center;
-    padding: 40px 20px 30px;
-}
-
-.badge {
-    background: rgba(255, 70, 85, 0.15);
-    color: #ff4655;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.hero h1 {
-    font-size: 48px;
-    font-weight: 900;
-    margin: 15px 0 10px;
-    background: linear-gradient(180deg, #ffffff 0%, #a5b4fc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
+/* Main Screen */
+.hero { text-align: center; padding: 40px 20px 30px; }
+.badge { background: rgba(255, 70, 85, 0.15); color: #ff4655; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+.hero h1 { font-size: 48px; font-weight: 900; margin: 15px 0 10px; background: linear-gradient(180deg, #ffffff 0%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .hero p { color: #9ca3af; font-size: 17px; }
 
-.main-menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
+.main-menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 20px; }
 .menu-card {
     background: rgba(22, 27, 38, 0.6);
-    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
-    padding: 30px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    position: relative;
-    overflow: hidden;
+    border-radius: 24px; padding: 30px; cursor: pointer;
+    display: flex; flex-direction: column; gap: 15px; position: relative;
 }
-
-.menu-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-
-.menu-card.highlight {
-    border-color: rgba(255, 70, 85, 0.4);
-    background: linear-gradient(135deg, rgba(22, 27, 38, 0.8), rgba(255, 70, 85, 0.1));
-}
-
+.menu-card:hover { transform: translateY(-8px); border-color: rgba(255, 255, 255, 0.25); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+.menu-card.highlight { border-color: rgba(255, 70, 85, 0.4); background: linear-gradient(135deg, rgba(22, 27, 38, 0.8), rgba(255, 70, 85, 0.1)); }
 .menu-icon { font-size: 40px; }
-
 .menu-info h2 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
 .menu-info p { font-size: 13px; color: #9ca3af; line-height: 1.4; }
 
-/* Cards Layout */
 .card.glass {
     background: rgba(22, 27, 38, 0.6);
-    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
-    padding: 35px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border-radius: 24px; padding: 35px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
-
 .subtitle { color: #9ca3af; margin: 8px 0 25px; font-size: 14px; }
 
-/* Map Roulette visual */
-.roulette-container {
-    height: 260px;
-    border-radius: 20px;
-    background: #11151c;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 25px;
-    background-size: cover;
-    background-position: center;
+/* Star Drop Roulette */
+.stardrop-wrapper { position: relative; margin: 30px 0; }
+.stardrop-card {
+    height: 280px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.roulette-display {
-    z-index: 2;
-    text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+.stardrop-light-effect {
+    position: absolute; width: 100%; height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    opacity: 0; transition: opacity 0.3s;
 }
 
-.roulette-tag {
-    background: #ff4655;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 800;
+.rarity-badge {
+    display: inline-block; padding: 6px 16px; border-radius: 20px;
+    font-weight: 900; font-size: 14px; letter-spacing: 2px;
+    background: #3b82f6; color: white; margin-bottom: 10px;
 }
 
-.roulette-display h3 {
-    font-size: 42px;
-    font-weight: 900;
-    margin-top: 10px;
+.stardrop-content h1 { font-size: 46px; font-weight: 900; letter-spacing: 2px; }
+.stardrop-content p { color: #9ca3af; margin-top: 6px; font-weight: 600; }
+
+/* Shake Animation */
+.shake { animation: stardropShake 0.1s infinite alternate; }
+@keyframes stardropShake {
+    0% { transform: translate(2px, 2px) rotate(0deg); }
+    100% { transform: translate(-2px, -2px) rotate(-1deg); }
 }
 
-/* Win Effect Glow */
-.roulette-container.winner {
-    border-color: #f59e0b;
-    box-shadow: 0 0 50px rgba(245, 158, 11, 0.6);
-    animation: pulseGlow 1s infinite alternate;
+/* Star Drop Legendary Glow */
+.legendary-glow {
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 80px rgba(245, 158, 11, 0.8), inset 0 0 30px rgba(245, 158, 11, 0.5) !important;
+    animation: pulseLegendary 0.8s infinite alternate !important;
 }
-
-@keyframes pulseGlow {
-    from { box-shadow: 0 0 30px rgba(245, 158, 11, 0.4); }
-    to { box-shadow: 0 0 60px rgba(245, 158, 11, 0.8); }
+@keyframes pulseLegendary {
+    from { transform: scale(1); }
+    to { transform: scale(1.02); }
 }
 
 .spin-btn {
-    font-size: 18px;
-    padding: 18px;
-    border-radius: 16px;
+    font-size: 18px; padding: 18px; border-radius: 16px;
     background: linear-gradient(135deg, #ff4655, #d93845);
-    color: white;
-    border: none;
-    font-weight: 800;
-    cursor: pointer;
-    width: 100%;
+    color: white; border: none; font-weight: 800; cursor: pointer; width: 100%;
 }
+.spin-btn:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(255, 70, 85, 0.4); }
 
-.spin-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 10px 25px rgba(255, 70, 85, 0.4);
-}
-
-/* Match Scoreboard */
+/* Scoreboard */
 .match-list { display: flex; flex-direction: column; gap: 20px; }
-
-.match-item {
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 18px;
-    padding: 20px;
-}
-
+.match-item { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 18px; padding: 20px; }
 .match-header { font-size: 13px; font-weight: 800; color: #ff4655; margin-bottom: 12px; }
-
-.match-body {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-}
-
+.match-body { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 .team-slot {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.04);
-    padding: 15px 20px;
-    border-radius: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 800;
+    flex: 1; background: rgba(255, 255, 255, 0.04); padding: 15px 20px;
+    border-radius: 14px; display: flex; justify-content: space-between; align-items: center; font-weight: 800;
 }
-
 .team-slot.kimchi { border-left: 4px solid #ff4655; }
 .team-slot.pizza { border-left: 4px solid #eab308; }
 .team-slot.tangsuyuk { border-left: 4px solid #3b82f6; }
-
-.team-slot button {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: #fff;
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-size: 12px;
-    cursor: pointer;
-    font-weight: 700;
-}
-
+.team-slot button { background: rgba(255, 255, 255, 0.1); border: none; color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 700; }
 .team-slot button:hover { background: #ff4655; }
-
-.team-slot.win {
-    background: rgba(34, 197, 94, 0.2);
-    border-color: #22c55e;
-}
-
 .vs-badge { font-weight: 900; color: #4b5563; font-size: 16px; }
+.match-status { margin-top: 10px; font-size: 13px; color: #9ca3af; text-align: right; font-weight: 600; }
 
-.match-status {
-    margin-top: 10px;
-    font-size: 13px;
-    color: #9ca3af;
-    text-align: right;
-    font-weight: 600;
-}
-
-/* Teams & Draft */
-.teams-grid, .tier-columns { display: flex; gap: 20px; }
-
+/* Teams & Drag/Drop UI */
+.teams-grid { display: flex; gap: 20px; }
 .team-card { flex: 1; }
 .team-card.kimchi { border-top: 4px solid #ff4655; }
 .team-card.pizza { border-top: 4px solid #eab308; }
 .team-card.tangsuyuk { border-top: 4px solid #3b82f6; }
-
 .member-list { list-style: none; margin-top: 15px; }
-.member-list li {
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    color: #d1d5db;
-    font-weight: 500;
+.member-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); color: #d1d5db; font-weight: 500; }
+
+/* Drag and Drop Draft */
+.dropzone-container { display: flex; gap: 15px; margin-bottom: 30px; }
+.dropzone {
+    flex: 1; background: rgba(0, 0, 0, 0.3); border: 2px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 18px; padding: 15px; min-height: 220px;
 }
+.dropzone.kimchi { border-color: rgba(255, 70, 85, 0.4); }
+.dropzone.pizza { border-color: rgba(234, 179, 8, 0.4); }
+.dropzone.tangsuyuk { border-color: rgba(59, 130, 246, 0.4); }
 
-.tier-col { flex: 1; background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 16px; }
-.tier-col h4 { margin-bottom: 15px; color: #9ca3af; }
+.dropzone-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.dropzone-header .count { font-size: 12px; background: rgba(255, 255, 255, 0.1); padding: 4px 8px; border-radius: 10px; font-weight: 800; }
 
-.player-item {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 12px 15px;
-    border-radius: 12px;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.drop-list { display: flex; flex-direction: column; gap: 8px; }
+
+/* Player Pool */
+.pool-wrapper { background: rgba(0, 0, 0, 0.2); border-radius: 18px; padding: 20px; }
+.pool-wrapper h3 { font-size: 15px; margin-bottom: 15px; color: #9ca3af; }
+.pool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; min-height: 100px; }
+
+.draggable-player {
+    background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px; padding: 12px; cursor: grab; font-weight: 700;
+    font-size: 13px; text-align: center; user-select: none;
 }
-
-.pick-btns { display: flex; gap: 4px; }
-.pick-btns button {
-    border: none;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 11px;
-    cursor: pointer;
-    color: #fff;
-}
-
-.btn-kimchi { background: #ff4655; }
-.btn-pizza { background: #ca8a04; }
-.btn-tang { background: #2563eb; }
+.draggable-player:active { cursor: grabbing; opacity: 0.5; }
+.draggable-player:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.15); border-color: #ff4655; }
