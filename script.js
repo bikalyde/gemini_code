@@ -1,9 +1,16 @@
-// 발로란트 전 전체 맵 11종
+// 발로란트 맵 데이터 (이름 & 고화질 배경 이미지)
 const valMaps = [
-    "어센트 (Ascent)", "바인드 (Bind)", "헤이븐 (Haven)", 
-    "스플릿 (Split)", "아이스박스 (Icebox)", "브리즈 (Breeze)", 
-    "프랙처 (Fracture)", "펄 (Pearl)", "로터스 (Lotus)", 
-    "선셋 (Sunset)", "어비스 (Abyss)"
+    { name: "어센트 (Ascent)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt1f618b76cdd14728/5eb7cd148e67a57a02241f97/ascent-featured.jpg" },
+    { name: "바인드 (Bind)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt33bc3a59d9972352/5eb7cd0c306d8a0c20164c40/bind-featured.jpg" },
+    { name: "헤이븐 (Haven)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt36f2a6a68f6a42a0/5eb7cd10f607d70c0c788220/haven-featured.jpg" },
+    { name: "스플릿 (Split)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/bltd5723b378051a80c/5eb7cd1d2a13280c102377b5/split-featured.jpg" },
+    { name: "아이스박스 (Icebox)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt2b1c28c894ef08f7/5f80cc0288eb92723c3167eb/Icebox_Header.jpg" },
+    { name: "브리즈 (Breeze)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt226b9a473b184a56/608214f44053673f8a42c38d/Breeze_Header.jpg" },
+    { name: "프랙처 (Fracture)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt1e9134a413d750c9/6132a0cb5d92e50edaa2ebdc/Fracture_Header.jpg" },
+    { name: "펄 (Pearl)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/bltcb2ed4517ec562d9/62a26569ecdfd95015e342a2/Pearl_Header.jpg" },
+    { name: "로터스 (Lotus)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt3c8612ca4e00f946/63b723528b17171092fb1380/Lotus_Header.jpg" },
+    { name: "선셋 (Sunset)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/bltd1bd1e68ca4339be/64e8fd426bfb3fdfbc88be88/Sunset_Header.jpg" },
+    { name: "어비스 (Abyss)", bg: "https://images.contentstack.io/v3/assets/bltb654820d61717365/blt0dfa6c7081fa8331/66624a9ed517e47dbb1f4134/Abyss_Header.jpg" }
 ];
 
 // 초기 선수 목록
@@ -36,9 +43,10 @@ function switchTab(tabId) {
     homeBtn.style.display = (tabId === 'main') ? 'none' : 'block';
 }
 
-// 🎰 감속 슬롯 연출 룰렛 + 폭죽
+// 🎰 감속 슬롯 연출 룰렛 + 배경 이미지 변경 + 폭죽
 function startRoulette() {
     const box = document.getElementById('roulette-box');
+    const bgImage = document.getElementById('map-bg-image');
     const nameEl = document.getElementById('map-name');
     const tagEl = document.getElementById('map-tag');
     const btn = document.getElementById('spin-btn');
@@ -49,35 +57,35 @@ function startRoulette() {
     tagEl.innerText = "SPINNING...";
     tagEl.style.background = "#ff4655";
 
-    let delay = 30; // 시작 속도 (매우 빠름)
+    let delay = 30; // 시작 속도
     let count = 0;
     const maxCount = 35; // 총 교체 횟수
 
     function step() {
         const randomMap = valMaps[Math.floor(Math.random() * valMaps.length)];
-        nameEl.innerText = randomMap;
+        nameEl.innerText = randomMap.name;
+        bgImage.style.backgroundImage = `url('${randomMap.bg}')`;
         count++;
 
         if (count < maxCount) {
-            // 뒤로 갈수록 대기 시간(delay)이 늘어나며 감속 연출 (따다다닥... 따.. 따... 멈춤)
             delay += Math.floor(count * 0.8);
             setTimeout(step, delay);
         } else {
-            // 당첨!
+            // 당첨 연출
             box.classList.add('winning');
             tagEl.innerText = "SELECTED MAP";
             tagEl.style.background = "#22c55e";
             btn.disabled = false;
             btn.innerText = "🎰 다시 추첨하기";
             
-            triggerFireworks(); // 폭죽 발사!
+            triggerFireworks();
         }
     }
 
     step();
 }
 
-// 🎉 폭죽 파티클 이펙트 (Canvas)
+// 🎉 폭죽 파티클 이펙트
 function triggerFireworks() {
     const canvas = document.getElementById('fireworks-canvas');
     if (!canvas) return;
@@ -111,7 +119,7 @@ function triggerFireworks() {
                 active = true;
                 p.x += p.dx;
                 p.y += p.dy;
-                p.dy += 0.15; // 중력 효과
+                p.dy += 0.15;
                 p.alpha -= p.life;
 
                 ctx.globalAlpha = Math.max(0, p.alpha);

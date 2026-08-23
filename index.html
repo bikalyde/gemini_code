@@ -59,7 +59,7 @@
             </div>
         </section>
 
-        <!-- 2. 맵 추첨 화면 (감속 룰렛 + 폭죽) -->
+        <!-- 2. 맵 추첨 화면 (감속 룰렛 + 배경 이미지 블러 + 폭죽) -->
         <section id="tab-map" class="tab-content">
             <div class="card glass text-center">
                 <h2>🎰 VALORANT MAP SELECTOR</h2>
@@ -68,8 +68,14 @@
                 <div class="roulette-wrapper" id="roulette-wrapper">
                     <canvas id="fireworks-canvas"></canvas>
                     <div class="roulette-box" id="roulette-box">
-                        <div class="map-tag" id="map-tag">READY</div>
-                        <h1 class="map-name" id="map-name">버튼을 눌러주세요</h1>
+                        <!-- 배경 이미지용 레이어 -->
+                        <div class="map-bg-image" id="map-bg-image"></div>
+                        <div class="map-overlay"></div>
+                        
+                        <div class="roulette-content">
+                            <div class="map-tag" id="map-tag">READY</div>
+                            <h1 class="map-name" id="map-name">버튼을 눌러주세요</h1>
+                        </div>
                     </div>
                 </div>
 

@@ -106,17 +106,42 @@ body {
 }
 
 .roulette-box {
-    height: 220px;
+    height: 240px;
     border-radius: 24px;
-    background: linear-gradient(135deg, #151922, #0d1017);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: #0d1017;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+/* 맵 배경 이미지 & 블러 레이어 */
+.map-bg-image {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px);
+    transform: scale(1.1);
+    transition: background-image 0.15s ease-out, filter 0.4s ease, transform 0.4s ease;
+    z-index: 1;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13, 16, 23, 0.65);
+    z-index: 2;
+}
+
+.roulette-content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
 .map-tag {
@@ -131,22 +156,27 @@ body {
 }
 
 .map-name {
-    font-size: 44px;
+    font-size: 42px;
     font-weight: 900;
     letter-spacing: -1px;
     color: #ffffff;
-    text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    text-shadow: 0 4px 20px rgba(0,0,0,0.8);
 }
 
 .roulette-box.winning {
     border-color: #ff4655;
-    box-shadow: 0 0 50px rgba(255, 70, 85, 0.5);
+    box-shadow: 0 0 50px rgba(255, 70, 85, 0.6);
     animation: winPulse 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.roulette-box.winning .map-bg-image {
+    filter: blur(3px); /* 최종 당첨 시 배경을 살짝 선명하게 */
+    transform: scale(1.03);
 }
 
 @keyframes winPulse {
     0% { transform: scale(0.96); }
-    50% { transform: scale(1.03); }
+    50% { transform: scale(1.02); }
     100% { transform: scale(1); }
 }
 
