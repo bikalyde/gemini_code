@@ -1,4 +1,4 @@
-// 라이엇 공식 VALORANT API 고화질 맵 스플래시 이미지 링크
+// 라이엇 공식 VALORANT API 고화질 스플래시 이미지
 const valMaps = [
     { name: "어센트 (Ascent)", bg: "https://media.valorant-api.com/maps/7edd9e3d-4191-708d-9b09-24b73708a5f1/splash.png" },
     { name: "바인드 (Bind)", bg: "https://media.valorant-api.com/maps/2c9d3312-4a6e-4b28-9fef-bc27bd852386/splash.png" },
@@ -12,6 +12,43 @@ const valMaps = [
     { name: "선셋 (Sunset)", bg: "https://media.valorant-api.com/maps/92584fbe-486a-b3b2-9afe-09a950746d6d/splash.png" },
     { name: "어비스 (Abyss)", bg: "https://media.valorant-api.com/maps/2240863f-42e7-a722-2615-38a163283f58/splash.png" }
 ];
+
+const CARD_WIDTH = 240; // 카드 넓이(220px) + 마진(20px)
+let extendedMapList = [];
+
+// 무한 캐러셀을 위해 맵 목록을 여러 번 반복해서 트랙에 생성
+function initCarousel() {
+    const track = document.getElementById('carousel-track');
+    track.innerHTML = '';
+    
+    // 긴 루프감을 위해 맵 리스트를 6번 반복 바인딩
+    extendedMapList = [];
+    for (let i = 0; i < 6; i++) {
+        extendedMapList = extendedMapList.concat(valMaps);
+    }
+
+    extendedMapList.forEach((map, idx) => {
+        const card = document.createElement('div');
+        card.className = 'map-card';
+        card.style.backgroundImage = `url("${map.bg}")`;
+        card.id = `map-card-${idx}`;
+        card.innerHTML = `
+            <div class="map-card-overlay">
+                <div class="map-card-title">${map.name}</div>
+            </div>
+        `;
+        track.appendChild(card);
+    });
+
+    // 시작 위치 세팅
+    setTrackPosition(0, false);
+}
+
+function setTrackPosition(px, animate = true) {
+    const track = document.getElementById('carousel-track');
+    track.style.transition = animate ? 'transform 5s cubic-bezier(0.12, 0.8, 0.15, 1)' : 'none';
+    track.style.transform = `translateX(${px}px)`;
+}
 
 // 초기 선수 목록
 let playersData = [
@@ -43,45 +80,43 @@ function switchTab(tabId) {
     homeBtn.style.display = (tabId === 'main') ? 'none' : 'block';
 }
 
-// 🎰 감속 슬롯 연출 룰렛 + 배경 이미지 변경 + 폭죽
+// 🎰 회전초밥 룰렛 추첨
 function startRoulette() {
-    const box = document.getElementById('roulette-box');
-    const bgImage = document.getElementById('map-bg-image');
-    const nameEl = document.getElementById('map-name');
-    const tagEl = document.getElementById('map-tag');
     const btn = document.getElementById('spin-btn');
+    const container = document.getElementById('carousel-container');
+    const containerWidth = container.clientWidth;
+
+    // 이전 하이라이트 제거
+    document.querySelectorAll('.map-card').forEach(c => c.classList.remove('active'));
 
     btn.disabled = true;
     btn.innerText = "🎰 추첨하는 중...";
-    box.classList.remove('winning');
-    tagEl.innerText = "SPINNING...";
-    tagEl.style.background = "#ff4655";
 
-    let delay = 30;
-    let count = 0;
-    const maxCount = 35;
+    // 일단 시작 위치로 즉시 리셋 (트랙 처음 구간으로)
+    setTrackPosition(0, false);
 
-    function step() {
-        const randomMap = valMaps[Math.floor(Math.random() * valMaps.length)];
-        nameEl.innerText = randomMap.name;
-        bgImage.style.backgroundImage = `url('${randomMap.bg}')`;
-        count++;
+    // 무작위 당첨 맵 선택 (4~5번째 루프 사이에서 결정)
+    const randomIndex = Math.floor(Math.random() * valMaps.length);
+    const targetIndex = valMaps.length * 4 + randomIndex;
 
-        if (count < maxCount) {
-            delay += Math.floor(count * 0.8);
-            setTimeout(step, delay);
-        } else {
-            box.classList.add('winning');
-            tagEl.innerText = "SELECTED MAP";
-            tagEl.style.background = "#22c55e";
-            btn.disabled = false;
-            btn.innerText = "🎰 다시 추첨하기";
-            
-            triggerFireworks();
-        }
-    }
+    // 중앙에 정렬하기 위한 offset 계산
+    const targetOffset = -(targetIndex * CARD_WIDTH) + (containerWidth / 2) - (CARD_WIDTH / 2);
 
-    step();
+    // 약간의 프레임 대기 후 5초 동안 촤르륵 이동 연출
+    setTimeout(() => {
+        setTrackPosition(targetOffset, true);
+    }, 50);
+
+    // 5초 후 애니메이션 종료 시점
+    setTimeout(() => {
+        const winningCard = document.getElementById(`map-card-${targetIndex}`);
+        if (winningCard) winningCard.classList.add('active');
+
+        btn.disabled = false;
+        btn.innerText = "🎰 다시 추첨하기";
+
+        triggerFireworks();
+    }, 5100);
 }
 
 // 🎉 폭죽 파티클 이펙트
@@ -215,6 +250,7 @@ function renderTeamInfoPage() {
 }
 
 window.onload = () => {
+    initCarousel(); // 회전초밥 맵 트랙 초기 생성
     renderDraftUI();
     renderTeamInfoPage();
 };

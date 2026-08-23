@@ -29,7 +29,7 @@
                     <div class="menu-icon">🎰</div>
                     <div class="menu-info">
                         <h2>맵 추첨하기</h2>
-                        <p>감속 슬롯 연출 및 폭죽 이펙트 맵 무작위 추첨</p>
+                        <p>회전초밥 슬롯 연출 및 폭죽 이펙트 맵 무작위 추첨</p>
                     </div>
                 </div>
 
@@ -59,22 +59,22 @@
             </div>
         </section>
 
-        <!-- 2. 맵 추첨 화면 (감속 룰렛 + 배경 이미지 블러 + 폭죽) -->
+        <!-- 2. 맵 추첨 화면 (회전초밥 트랙 방식) -->
         <section id="tab-map" class="tab-content">
             <div class="card glass text-center">
                 <h2>🎰 VALORANT MAP SELECTOR</h2>
                 <p class="subtitle">추첨 버튼을 누르면 무작위로 경기 맵이 결정됩니다.</p>
                 
-                <div class="roulette-wrapper" id="roulette-wrapper">
+                <div class="roulette-wrapper">
                     <canvas id="fireworks-canvas"></canvas>
-                    <div class="roulette-box" id="roulette-box">
-                        <!-- 배경 이미지용 레이어 -->
-                        <div class="map-bg-image" id="map-bg-image"></div>
-                        <div class="map-overlay"></div>
-                        
-                        <div class="roulette-content">
-                            <div class="map-tag" id="map-tag">READY</div>
-                            <h1 class="map-name" id="map-name">버튼을 눌러주세요</h1>
+                    
+                    <!-- 중앙 핀 고정 레이어 -->
+                    <div class="selector-pointer"></div>
+
+                    <!-- 회전 트랙 상자 -->
+                    <div class="carousel-container" id="carousel-container">
+                        <div class="carousel-track" id="carousel-track">
+                            <!-- JS에서 맵 카드가 동적으로 채워집니다 -->
                         </div>
                     </div>
                 </div>
